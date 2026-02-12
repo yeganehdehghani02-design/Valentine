@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>برای تو ❤️</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-family: sans-serif;
+      background: linear-gradient(135deg, #ff6a88, #ff99ac);
+      overflow: hidden;
+      direction: rtl;
+    }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      font-size: 20px;
+      z-index: 5;
+      transition: opacity 0.8s ease;
+    }
+    .overlay.hidden { opacity: 0; pointer-events: none; }
+    .box { padding: 24px; transform: translateY(-30px); z-index: 2; max-width: 90%; }
+    h1 {
+      white-space: pre-line;
+      line-height: 2;
+      font-size: 22px;
+      color: #fff;
+      text-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
+      margin: 0 0 20px 0;
+    }
+    .song-title {
+      font-size: 14px;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+    .heart {
+      position: absolute;
+      color: #ff2e63;
+      animation: float linear forwards;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.6); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay">روی صفحه لمس کن… ✨</div>
+  <div class="box">
+    <h1>
+تو دلیل لبخندای بی دلیلمی...
+قشنگ ترین اتفاق زندگیم
+کنار تو ساده ترین لحظه ها هم بهترین خاطره هام میشن.
+دنیا با تو قشنگ تره
+دوستت دارم همه‌ی قلبم♥️
+    </h1>
+    <div class="song-title">♪ ماندگار — شادمهر عقیلی ♪</div>
+    <audio id="music" preload="auto">
+      <source src="song.mp3" type="audio/mpeg" />
+    </audio>
+  </div>
+
+  <script>
+    const overlay = document.getElementById("overlay");
+    const music = document.getElementById("music");
+    let heartInterval;
+
+    function startExperience() {
+      overlay.classList.add("hidden");
+      music.play().catch(() => {});
+      heartInterval = setInterval(createHeart, 250);
+      document.removeEventListener("click", startExperience);
+      document.removeEventListener("touchstart", startExperience);
+    }
+
+    document.addEventListener("click", startExperience);
+    document.addEventListener("touchstart", startExperience);
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "❤";
+      const size = Math.random() * 18 + 12;
+      heart.style.fontSize = size + "px";
+      heart.style.left = Math.random() * 100 + "vw";
+      const duration = Math.random() * 3 + 4;
+      heart.style.animationDuration = duration + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), duration * 1000);
+    }
+  </script>
+</body>
+</html>
